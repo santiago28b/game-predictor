@@ -1,0 +1,56 @@
+---
+title: "wc-sim"
+---
+
+## Project Overview
+
+**wc-sim** is a Python package for simulating international soccer matches using a custom rating system.
+
+The main idea is simple:
+
+- start with current FIFA ranking points
+- add a bonus based on historical FIFA World Cup titles
+- validate whether this new rating predicts match outcomes better than raw FIFA points
+- use the rating to simulate head-to-head matches
+
+## Motivating Question
+
+Can we build a more useful World Cup-style match simulator by combining a team's current FIFA strength with its historical tournament success?
+
+## Project Components
+
+This project includes:
+
+- a Python package for data wrangling, simulation, and validation
+- a Streamlit app for head-to-head match simulation
+- a tutorial for installation and package use
+- a technical report explaining the methodology and results
+
+## Quick Links
+
+- [Tutorial](tutorial.html)
+- [Technical Report](report.html)
+- [API Reference](reference.html)
+- [Streamlit App](https://game-predictor-g66jsocnan5fdee67p8ben.streamlit.app/)
+- [GitHub Repository](https://github.com/santiago28b/game-predictor)
+
+## Main Functions
+
+The package currently includes these main functions:
+
+- `calculate_weighted_rating()`
+- `compare_rank_changes()`
+- `simulate_match()`
+- `simulate_match_n()`
+- `validate_weighted_rating()`
+- `tune_weight()`
+
+## Data Sources
+
+This project uses:
+
+- current FIFA rankings
+- a curated table of World Cup title counts
+- historical international match results for validation
+
+The data collection and cleaning workflow is documented in the repository, including the notebook used to assemble the dataset.
