@@ -1,0 +1,11 @@
+---
+title: "Tutorial"
+---
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/santiago28b/game-predictor.git
+cd game-predictor
