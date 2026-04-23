@@ -1,114 +1,53 @@
-import numpy as np
 import pandas as pd
+import pytest
+
+from wc_sim import simulate_match, simulate_match_n
 
 
-def _check_required_columns(df: pd.DataFrame, required: list[str], df_name: str) -> None:
-    missing = [col for col in required if col not in df.columns]
-    if missing:
-        raise ValueError(f"{df_name} is missing required columns: {missing}")
-
-
-def simulate_match(
-    team_a: str,
-    team_b: str,
-    df_weighted: pd.DataFrame,
-    random_state: int | None = None
-) -> str:
-    """
-    Simulates one head-to-head match between two teams.
-
-    Args:
-        team_a:
-            Name of the first team.
-        team_b:
-            Name of the second team.
-        df_weighted:
-            DataFrame with columns ['name', 'weighted_rating'].
-        random_state:
-            Optional seed for reproducibility.
-
-    Returns:
-        Name of the winning team.
-    """
-    _check_required_columns(df_weighted, ["name", "weighted_rating"], "df_weighted")
-
-    if team_a == team_b:
-        raise ValueError("team_a and team_b must be different teams")
-
-    ratings = df_weighted.set_index("name")["weighted_rating"]
-
-    if team_a not in ratings.index:
-        raise ValueError(f"Team not found: {team_a}")
-    if team_b not in ratings.index:
-        raise ValueError(f"Team not found: {team_b}")
-
-    r_a = ratings[team_a]
-    r_b = ratings[team_b]
-
-    if r_a <= 0 or r_b <= 0:
-        raise ValueError("weighted ratings must be positive")
-
-    prob_a = r_a / (r_a + r_b)
-
-    rng = np.random.default_rng(random_state)
-    return team_a if rng.random() < prob_a else team_b
-
-
-def simulate_match_n(
-    team_a: str,
-    team_b: str,
-    df_weighted: pd.DataFrame,
-    n: int = 1000,
-    random_state: int | None = None
-) -> pd.DataFrame:
-    """
-    Simulates a match n times and returns win counts and win percentages.
-
-    Args:
-        team_a:
-            Name of the first team.
-        team_b:
-            Name of the second team.
-        df_weighted:
-            DataFrame with columns ['name', 'weighted_rating'].
-        n:
-            Number of simulations.
-        random_state:
-            Optional seed for reproducibility.
-
-    Returns:
-        DataFrame with columns ['team', 'wins', 'win_pct'].
-    """
-    _check_required_columns(df_weighted, ["name", "weighted_rating"], "df_weighted")
-
-    if n <= 0:
-        raise ValueError("n must be a positive integer")
-
-    if team_a == team_b:
-        raise ValueError("team_a and team_b must be different teams")
-
-    ratings = df_weighted.set_index("name")["weighted_rating"]
-
-    if team_a not in ratings.index:
-        raise ValueError(f"Team not found: {team_a}")
-    if team_b not in ratings.index:
-        raise ValueError(f"Team not found: {team_b}")
-
-    r_a = ratings[team_a]
-    r_b = ratings[team_b]
-
-    if r_a <= 0 or r_b <= 0:
-        raise ValueError("weighted ratings must be positive")
-
-    prob_a = r_a / (r_a + r_b)
-
-    rng = np.random.default_rng(random_state)
-    draws = rng.random(n)
-    wins_a = int((draws < prob_a).sum())
-    wins_b = n - wins_a
-
+@pytest.fixture
+def df_weighted():
     return pd.DataFrame({
-        "team": [team_a, team_b],
-        "wins": [wins_a, wins_b],
-        "win_pct": [round(wins_a / n * 100, 2), round(wins_b / n * 100, 2)],
+        "fifa_rank": [1, 2],
+        "name": ["Brazil", "Canada"],
+        "points": [2000.0, 1000.0],
+        "wc_titles": [5, 0],
+        "weighted_rating": [2250.0, 1000.0],
+        "weighted_rank": [1, 2],
     })
+
+
+def test_simulate_match_returns_valid_winner(df_weighted):
+    winner = simulate_match("Brazil", "Canada", df_weighted, random_state=42)
+    assert winner in ["Brazil", "Canada"]
+
+
+def test_simulate_match_unknown_team_raises(df_weighted):
+    with pytest.raises(ValueError):
+        simulate_match("Brazil", "Atlantis", df_weighted)
+
+
+def test_simulate_match_same_team_raises(df_weighted):
+    with pytest.raises(ValueError):
+        simulate_match("Brazil", "Brazil", df_weighted)
+
+
+def test_simulate_match_n_output_shape(df_weighted):
+    result = simulate_match_n("Brazil", "Canada", df_weighted, n=100, random_state=42)
+    assert len(result) == 2
+    assert set(result["team"]) == {"Brazil", "Canada"}
+
+
+def test_simulate_match_n_win_pct_sums_to_100(df_weighted):
+    result = simulate_match_n("Brazil", "Canada", df_weighted, n=1000, random_state=42)
+    assert abs(result["win_pct"].sum() - 100.0) < 0.01
+
+
+def test_simulate_match_n_favors_higher_rated(df_weighted):
+    result = simulate_match_n("Brazil", "Canada", df_weighted, n=2000, random_state=42)
+    brazil_pct = result.loc[result["team"] == "Brazil", "win_pct"].iloc[0]
+    assert brazil_pct > 60
+
+
+def test_simulate_match_n_invalid_n_raises(df_weighted):
+    with pytest.raises(ValueError):
+        simulate_match_n("Brazil", "Canada", df_weighted, n=0)
