@@ -1,0 +1,110 @@
+---
+title: "Technical Report"
+---
+
+## Motivating Question
+
+Can we improve an international soccer match simulator by combining current FIFA points with historical FIFA World Cup success?
+
+Most rating systems focus mainly on present performance. This project tests whether adding a small historical prestige component can improve prediction accuracy for international match outcomes.
+
+## Data Sources
+
+This project uses three main data sources:
+
+1. **Current FIFA rankings** with team names and point totals  
+2. **World Cup title counts** for nations that have won the tournament  
+3. **Historical international match results** used to validate the model
+
+The ranking and titles data are stored in the `data/` folder. Historical results are used during validation. The repository also includes a notebook documenting the data collection process.
+
+## Data Wrangling
+
+The main wrangling step is merging current FIFA rankings with historical World Cup title counts.
+
+The weighted rating is defined as:
+
+\[
+\text{weighted_rating} = \text{FIFA points} + (\text{World Cup titles} \times \text{weight})
+\]
+
+This creates a new score that keeps current performance as the main signal while still allowing historical success to have some influence.
+
+## Analysis Workflow
+
+The project includes three main analysis steps:
+
+### 1. Build a weighted ranking table
+
+The package creates a table with:
+
+- FIFA rank
+- FIFA points
+- World Cup titles
+- weighted rating
+- weighted rank
+
+### 2. Validate the rating
+
+Historical match results are used to compare:
+
+- prediction accuracy from raw FIFA points
+- prediction accuracy from weighted ratings
+
+For each match, the higher-rated team is treated as the predicted winner.
+
+### 3. Simulate matches
+
+For two teams A and B, the package estimates the probability that team A wins as:
+
+\[
+P(A \text{ wins}) = \frac{\text{rating}_A}{\text{rating}_A + \text{rating}_B}
+\]
+
+Then the package simulates one match or many matches using this probability.
+
+## Key Takeaways
+
+This project shows that it is possible to build a simple and interpretable simulator from a small custom dataset.
+
+The main strengths are:
+
+- easy-to-understand rating formula
+- reproducible workflow
+- direct comparison of raw FIFA points vs weighted ratings
+- interactive Streamlit app
+
+## Added Improvement: Weight Tuning
+
+A useful extension in this version is testing multiple title weights instead of assuming one fixed value.
+
+This helps answer a better question:
+
+**How much should World Cup history matter?**
+
+By comparing accuracy across several candidate weights, the user can justify the final choice more clearly.
+
+## Limitations
+
+This model is intentionally simple. It does **not** include:
+
+- home-field advantage
+- draw probability
+- recent roster changes
+- injuries
+- match importance
+- expected goals or shot-based features
+
+Because of this, the simulator should be understood as a lightweight analytical tool, not a full forecasting system.
+
+## Conclusion
+
+The project meets the main goals of a data science workflow:
+
+- collect or assemble data
+- clean and merge it
+- create analytical functions in a package
+- validate a model
+- communicate results through documentation, a tutorial, a report, and an app
+
+Even with a simple formula, the package provides a clear and reproducible framework for exploring how historical success can affect match prediction.

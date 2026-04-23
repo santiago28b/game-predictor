@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>wc-sim – Game Predictor</title>
+<title>report – Game Predictor</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -90,7 +90,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -98,7 +98,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Tutorial</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./report.html"> 
+    <a class="nav-link active" href="./report.html" aria-current="page"> 
 <span class="menu-text">Technical Report</span></a>
   </li>  
   <li class="nav-item">
@@ -126,101 +126,17 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#project-overview" id="toc-project-overview" class="nav-link active" data-scroll-target="#project-overview">Project Overview</a></li>
-  <li><a href="#motivating-question" id="toc-motivating-question" class="nav-link" data-scroll-target="#motivating-question">Motivating Question</a></li>
-  <li><a href="#project-components" id="toc-project-components" class="nav-link" data-scroll-target="#project-components">Project Components</a></li>
-  <li><a href="#quick-links" id="toc-quick-links" class="nav-link" data-scroll-target="#quick-links">Quick Links</a></li>
-  <li><a href="#main-functions" id="toc-main-functions" class="nav-link" data-scroll-target="#main-functions">Main Functions</a></li>
-  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">Data Sources</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">wc-sim</h1>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
 
 
-</header>
 
-
-<section id="project-overview" class="level2">
-<h2 class="anchored" data-anchor-id="project-overview">Project Overview</h2>
-<p><strong>wc-sim</strong> is a Python package for simulating international soccer matches using a custom rating system.</p>
-<p>The main idea is simple:</p>
-<ul>
-<li>start with current FIFA ranking points</li>
-<li>add a bonus based on historical FIFA World Cup titles</li>
-<li>validate whether this new rating predicts match outcomes better than raw FIFA points</li>
-<li>use the rating to simulate head-to-head matches</li>
-</ul>
-</section>
-<section id="motivating-question" class="level2">
-<h2 class="anchored" data-anchor-id="motivating-question">Motivating Question</h2>
-<p>Can we build a more useful World Cup-style match simulator by combining a team’s current FIFA strength with its historical tournament success?</p>
-</section>
-<section id="project-components" class="level2">
-<h2 class="anchored" data-anchor-id="project-components">Project Components</h2>
-<p>This project includes:</p>
-<ul>
-<li>a Python package for data wrangling, simulation, and validation</li>
-<li>a Streamlit app for head-to-head match simulation</li>
-<li>a tutorial for installation and package use</li>
-<li>a technical report explaining the methodology and results</li>
-</ul>
-</section>
-<section id="quick-links" class="level2">
-<h2 class="anchored" data-anchor-id="quick-links">Quick Links</h2>
-<ul>
-<li><a href="tutorial.html">Tutorial</a></li>
-<li><a href="report.html">Technical Report</a></li>
-<li><a href="reference.html">API Reference</a></li>
-<li><a href="https://game-predictor-g66jsocnan5fdee67p8ben.streamlit.app/">Streamlit App</a></li>
-<li><a href="https://github.com/santiago28b/game-predictor">GitHub Repository</a></li>
-</ul>
-</section>
-<section id="main-functions" class="level2">
-<h2 class="anchored" data-anchor-id="main-functions">Main Functions</h2>
-<p>The package currently includes these main functions:</p>
-<ul>
-<li><code>calculate_weighted_rating()</code></li>
-<li><code>compare_rank_changes()</code></li>
-<li><code>simulate_match()</code></li>
-<li><code>simulate_match_n()</code></li>
-<li><code>validate_weighted_rating()</code></li>
-<li><code>tune_weight()</code></li>
-</ul>
-</section>
-<section id="data-sources" class="level2">
-<h2 class="anchored" data-anchor-id="data-sources">Data Sources</h2>
-<p>This project uses:</p>
-<ul>
-<li>current FIFA rankings</li>
-<li>a curated table of World Cup title counts</li>
-<li>historical international match results for validation</li>
-</ul>
-<p>The data collection and cleaning workflow is documented in the repository, including the notebook used to assemble the dataset.</p>
-
-
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

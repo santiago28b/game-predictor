@@ -1,5 +1,5 @@
 ---
-title: "wc-sim"
+title: "Game Predictor"
 ---
 
 ## Project Overview

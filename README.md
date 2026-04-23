@@ -1,125 +1,250 @@
-# game-predictor
-Predict international soccer match outcomes using FIFA rankings and historical World Cup data.
+---
+title: "Game Predictor"
+---
 
-## Resources
 
-- [Documentation](https://santiago28b.github.io/game-predictor/wc_sim.html)
-- [Tutorial (Getting Started)](#getting-started)
-- [Technical Report](#technical-report)
-- [Streamlit App](https://game-predictor-g66jsocnan5fdee67p8ben.streamlit.app/)
+A Python package for simulating international soccer match outcomes using FIFA rankings and historical World Cup success.
 
 ---
 
-## Getting Started
+## Project Overview
 
-### Installation
+This project explores whether match prediction can be improved by combining:
 
-Clone the repository and install the package using `uv`:
+- Current FIFA ranking points
+- Historical FIFA World Cup titles
+
+The idea is to create a simple weighted rating system, validate it using historical match results, and use it to simulate head-to-head matchups.
+
+The project follows a full data science workflow:
+
+1. Data collection
+2. Data cleaning and preparation
+3. Analysis and modeling
+4. Validation
+5. Communication through documentation, tutorial, report, and app
+
+---
+
+## Links
+
+| Resource            | URL                                                                 |
+|---------------------|---------------------------------------------------------------------|
+| GitHub Pages Website | https://santiago28b.github.io/game-predictor/                     |
+| Tutorial            | https://santiago28b.github.io/game-predictor/tutorial.html         |
+| Technical Report    | https://santiago28b.github.io/game-predictor/report.html           |
+| API Reference       | https://santiago28b.github.io/game-predictor/reference.html        |
+| Streamlit App       | https://game-predictor-g66jsocnan5fdee67p8ben.streamlit.app/       |
+
+---
+
+## Installation
+
+Clone the repository:
 
 ```bash
 git clone https://github.com/santiago28b/game-predictor.git
 cd game-predictor
-uv pip install -e .
 ```
 
-### Requirements
+Install the package locally:
 
-- Python 3.13+
-- Dependencies are managed via `uv` and listed in `pyproject.toml`
+```bash
+pip install -e .
+```
 
-### Basic Usage
+Optional (for development tools):
 
-**1. Build the weighted ratings dataset**
+```bash
+pip install -e .[dev]
+```
+
+---
+
+## Basic Usage
+
+### Load the data
 
 ```python
 import pandas as pd
 from wc_sim import calculate_weighted_rating
 
-ranks  = pd.read_csv("data/rankings.csv")
+ranks = pd.read_csv("data/rankings.csv")
 titles = pd.read_csv("data/titles.csv")
+```
 
+### Build the weighted rating table
+
+```python
 df_weighted = calculate_weighted_rating(ranks, titles, weight=50)
 print(df_weighted.head())
 ```
 
-**2. Simulate a head-to-head match**
+This creates a dataset that includes:
+
+- Original FIFA rank
+- FIFA points
+- World Cup titles
+- Weighted rating
+- Weighted rank
+
+### Compare ranking changes
+
+```python
+from wc_sim import compare_rank_changes
+
+changes = compare_rank_changes(df_weighted)
+print(changes.head())
+```
+
+### Simulate one match
 
 ```python
 from wc_sim import simulate_match
 
-winner = simulate_match("Brazil", "Argentina", df_weighted)
+winner = simulate_match("Brazil", "Argentina", df_weighted, random_state=42)
 print(winner)
 ```
 
-**3. Run N simulations and get win percentages**
+### Simulate many matches
 
 ```python
 from wc_sim import simulate_match_n
 
-results = simulate_match_n("Brazil", "Argentina", df_weighted, n=1000)
+results = simulate_match_n("Brazil", "Argentina", df_weighted, n=1000, random_state=42)
 print(results)
 ```
 
-**4. Validate the weighted rating against historical data**
+### Validate the model
 
 ```python
 from wc_sim import validate_weighted_rating
 
-# results_df is the Kaggle international football results dataset
+# Load your historical match results dataset
+results_df = pd.read_csv("path_to_your_results_dataset.csv")
+
 summary = validate_weighted_rating(results_df, df_weighted)
 print(summary)
 ```
 
-### Running the Streamlit App
+This compares prediction accuracy between:
+
+- Raw FIFA points
+- Weighted rating
+
+### Tune the title weight
+
+```python
+from wc_sim import tune_weight
+
+weight_results = tune_weight(
+    results_df,
+    ranks,
+    titles,
+    weights=[0, 25, 50, 75, 100]
+)
+
+print(weight_results)
+```
+
+This step helps determine how much historical success should influence team ratings.
+
+---
+
+## Streamlit App
+
+Run the app locally:
 
 ```bash
-uv run streamlit run app.py
+streamlit run app.py
+```
+
+The app allows users to:
+
+- Select two teams
+- Choose the title weight
+- Run simulations
+- View win probabilities
+- Compare ratings
+- Explore ranking changes
+
+---
+
+## Repository Structure
+
+```
+game-predictor/
+├── data/
+│   ├── rankings.csv
+│   └── titles.csv
+├── docs/
+├── src/
+│   └── wc_sim/
+│       ├── __init__.py
+│       ├── wrangling.py
+│       ├── simulation.py
+│       └── validation.py
+├── tests/
+├── app.py
+├── main.py
+├── scraper.ipynb
+├── README.md
+├── pyproject.toml
+├── _quarto.yml
+├── index.qmd
+├── tutorial.qmd
+├── report.qmd
+└── reference.qmd
 ```
 
 ---
 
-## Technical Report
+## Reproducibility
 
-### Motivating Question
+This project is fully reproducible and includes:
 
-> **Can we build a more accurate World Cup match simulator by combining a team's current FIFA ranking with its historical World Cup success?**
+- Data files in the `data` folder
+- A Python package with reusable functions
+- Test files to verify correctness
+- A notebook documenting data collection and preparation
+- A Quarto website with documentation, tutorial, and report
+- A Streamlit app for interactive exploration
 
-Standard FIFA/Elo ratings capture current form but ignore tournament pedigree. A team like Brazil may be ranked 6th today, yet historically outperforms that rank on the biggest stage. This project investigates whether adding a "prestige bonus" for past World Cup titles produces a more predictive rating.
+---
 
-### Methodology
+## Project Idea
 
-**Data Sources**
+The main goal of this project is to answer the question:
 
-- **FIFA Rankings** (Zyla Labs API) — current points and rank for 211 national teams.
-- **World Cup Titles** — a curated table of the 8 nations that have won the World Cup and their title counts.
-- **Historical Match Results** (Kaggle: `martj42/international-football-results-from-1872-to-2017`) — over 40,000 international matches used for validation.
+> Can we improve match prediction by including historical World Cup success in addition to current FIFA rankings?
 
-**Weighted Rating Formula**
+The weighted rating system is simple, interpretable, and easy to extend.
 
-A custom metric was engineered by merging the two ranking sources:
+---
 
-$$\text{weighted\_rating} = \text{FIFA points} + (\text{WC titles} \times 50)$$
+## Limitations
 
-The weight of 50 was chosen so that historical titles influence but do not override current form — no team shifts more than a few positions in the rankings due to heritage alone.
+This model is intentionally simple and does not include:
 
-**Validation**
+- Draw probabilities
+- Home-field advantage
+- Injuries or roster changes
+- Recent form beyond ranking points
+- Advanced metrics such as expected goals
 
-The weighted rating was tested against historical match outcomes. For each match where both teams appeared in the current rankings, we checked whether the higher-rated team won. Raw FIFA points predicted the correct winner in **59.84%** of matches; the weighted rating improved this to **60.85%**, confirming that the transformation adds predictive value.
+Because of this, it should be viewed as a basic analytical tool rather than a full prediction model.
 
-**Simulation**
+---
 
-Win probability for a head-to-head match is computed as:
+## Conclusion
 
-$$P(A \text{ wins}) = \frac{\text{rating}_A}{\text{rating}_A + \text{rating}_B}$$
+The `wc-sim` package demonstrates a complete data science workflow:
 
-A single match outcome is drawn from this probability. Running the simulation 1,000+ times yields stable win percentage estimates.
+- Assembling a dataset
+- Cleaning and merging data
+- Building a simple model
+- Validating predictions
+- Simulating outcomes
+- Communicating results through documentation and an app
 
-### Key Takeaways
-
-- Brazil's 5 World Cup titles add 250 points to its rating, pushing it above several teams with a higher current FIFA rank — consistent with its historically strong tournament performances.
-- The weighted rating outperforms raw FIFA points as a match predictor, validating the methodology.
-- The simulation is fully reproducible: given the same input CSVs, every user gets the same probability estimates (though individual match outcomes vary by design due to randomness).
-
-### Reproducibility
-
-All data wrangling, validation, and simulation logic lives in the `src/wc_sim/` package. The notebook `scraper.ipynb` documents the data collection steps. Running `app.py` requires only the two CSVs in `data/` and the installed package — no API key is needed after the initial data pull.
+The project provides a clear and reproducible framework for exploring how historical performance can influence match predictions.

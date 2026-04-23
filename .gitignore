@@ -11,3 +11,6 @@ wheels/
 #environmet variables
 .env
 
+
+/.quarto/
+**/*.quarto_ipynb

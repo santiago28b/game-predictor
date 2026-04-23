@@ -2,6 +2,21 @@
 title: "Tutorial"
 ---
 
+## Overview
+
+This tutorial shows how to install and use the `wc-sim` package.
+
+The package helps you:
+
+- Load FIFA ranking data and World Cup title data
+- Create a custom weighted rating
+- Compare how teams move in the rankings
+- Simulate head-to-head matches
+- Validate the rating against historical match results
+- Test multiple title weights
+
+---
+
 ## Installation
 
 Clone the repository:
@@ -9,3 +24,316 @@ Clone the repository:
 ```bash
 git clone https://github.com/santiago28b/game-predictor.git
 cd game-predictor
+```
+
+Install the package locally:
+
+```bash
+pip install -e .
+```
+
+If you also want development tools like testing and Quarto support, run:
+
+```bash
+pip install -e .[dev]
+```
+
+---
+
+## Load the Data
+
+First, import pandas and the main package function.
+
+```python
+import pandas as pd
+from wc_sim import calculate_weighted_rating
+```
+
+Now load the ranking and title data from the data folder.
+
+```python
+ranks = pd.read_csv("data/rankings.csv")
+titles = pd.read_csv("data/titles.csv")
+```
+
+You can inspect the first few rows:
+
+```python
+print(ranks.head())
+print(titles.head())
+```
+
+The rankings table should contain:
+
+| Column   |
+|----------|
+| `rank`   |
+| `name`   |
+| `points` |
+
+The titles table should contain:
+
+| Column      |
+|-------------|
+| `team`      |
+| `wc_titles` |
+
+---
+
+## Build the Weighted Rating Table
+
+Create the weighted rating table:
+
+```python
+df_weighted = calculate_weighted_rating(ranks, titles, weight=50)
+print(df_weighted.head())
+```
+
+This function combines current FIFA points with historical World Cup titles.
+
+The idea is:
+
+```
+weighted_rating = FIFA points + (wc_titles × weight)
+```
+
+The output includes:
+
+| Column            |
+|-------------------|
+| `fifa_rank`       |
+| `name`            |
+| `points`          |
+| `wc_titles`       |
+| `weighted_rating` |
+| `weighted_rank`   |
+
+---
+
+## Compare Rank Changes
+
+Check which teams move the most after including World Cup titles.
+
+```python
+from wc_sim import compare_rank_changes
+
+changes = compare_rank_changes(df_weighted)
+print(changes.head(10))
+```
+
+This produces:
+
+| Column          |
+|-----------------|
+| `name`          |
+| `fifa_rank`     |
+| `weighted_rank` |
+| `rank_change`   |
+
+A positive `rank_change` means the team improved in the ranking.
+
+---
+
+## Simulate One Match
+
+Simulate a single match between two teams.
+
+```python
+from wc_sim import simulate_match
+
+winner = simulate_match("Brazil", "Argentina", df_weighted, random_state=42)
+print(winner)
+```
+
+This returns the name of the winning team.
+
+The probability is computed as:
+
+```
+P(A wins) = rating_A / (rating_A + rating_B)
+```
+
+---
+
+## Simulate Many Matches
+
+Simulate many matches for better estimates.
+
+```python
+from wc_sim import simulate_match_n
+
+results = simulate_match_n("Brazil", "Argentina", df_weighted, n=1000, random_state=42)
+print(results)
+```
+
+The result includes:
+
+| Column    |
+|-----------|
+| `team`    |
+| `wins`    |
+| `win_pct` |
+
+Example output:
+
+| Team      | Wins | Win % |
+|-----------|------|-------|
+| Brazil    | 560  | 56%   |
+| Argentina | 440  | 44%   |
+
+---
+
+## Validate the Weighted Rating
+
+Test whether the weighted rating predicts outcomes better than FIFA points.
+
+```python
+from wc_sim import validate_weighted_rating
+
+results_df = pd.read_csv("data/results.csv")
+summary = validate_weighted_rating(results_df, df_weighted)
+print(summary)
+```
+
+The results dataset must contain:
+
+| Column       |
+|--------------|
+| `home_team`  |
+| `away_team`  |
+| `home_score` |
+| `away_score` |
+
+The output compares prediction accuracy using:
+
+- FIFA points
+- Weighted rating
+
+---
+
+## Test Multiple Weights
+
+Instead of choosing one weight, test several.
+
+```python
+from wc_sim import tune_weight
+
+weight_results = tune_weight(
+    results_df,
+    ranks,
+    titles,
+    weights=[0, 25, 50, 75, 100]
+)
+
+print(weight_results)
+```
+
+This shows accuracy for each weight and helps justify which weight to use.
+
+---
+
+## Run the Streamlit App
+
+Run the app with:
+
+```bash
+streamlit run app.py
+```
+
+The app allows users to:
+
+- Choose two teams
+- Set the title weight
+- Run simulations
+- Compare ratings
+- Explore rank changes
+
+---
+
+## Typical Workflow
+
+**Step 1: Load data**
+
+```python
+import pandas as pd
+from wc_sim import calculate_weighted_rating
+
+ranks = pd.read_csv("data/rankings.csv")
+titles = pd.read_csv("data/titles.csv")
+results_df = pd.read_csv("data/results.csv")
+```
+
+**Step 2: Build rating**
+
+```python
+df_weighted = calculate_weighted_rating(ranks, titles, weight=50)
+```
+
+**Step 3: Compare ranks**
+
+```python
+from wc_sim import compare_rank_changes
+
+changes = compare_rank_changes(df_weighted)
+print(changes.head())
+```
+
+**Step 4: Validate model**
+
+```python
+from wc_sim import validate_weighted_rating
+
+summary = validate_weighted_rating(results_df, df_weighted)
+print(summary)
+```
+
+**Step 5: Simulate matches**
+
+```python
+from wc_sim import simulate_match_n
+
+sim_results = simulate_match_n("Brazil", "Germany", df_weighted, n=5000, random_state=42)
+print(sim_results)
+```
+
+**Step 6: Tune weight**
+
+```python
+from wc_sim import tune_weight
+
+best_weights = tune_weight(results_df, ranks, titles, weights=[0, 25, 50, 75, 100])
+print(best_weights)
+```
+
+---
+
+## Notes and Limitations
+
+This model is simple and interpretable.
+
+It does not include:
+
+- Draw probability
+- Home-field advantage
+- Injuries
+- Recent form beyond rankings
+- Advanced metrics like expected goals
+
+> It should be used as a simple analytical tool, not a full prediction system.
+
+---
+
+## Summary
+
+In this tutorial you learned how to:
+
+1. Install the package
+2. Load data
+3. Build the weighted rating
+4. Compare rankings
+5. Simulate matches
+6. Validate results
+7. Test different weights
+8. Run the Streamlit app
+
+For more details, see the **Technical Report**.

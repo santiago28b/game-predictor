@@ -1,0 +1,231 @@
+---
+title: "API Reference"
+---
+
+## Overview
+
+This page describes the main functions available in the `wc-sim` package.
+
+These functions cover:
+
+- Data wrangling
+- Ranking comparison
+- Match simulation
+- Model validation
+- Parameter tuning
+
+---
+
+## `calculate_weighted_rating`
+
+### Description
+
+Builds a weighted rating table by combining FIFA ranking points with historical World Cup titles.
+
+### Arguments
+
+| Argument    | Description                                                                 |
+|-------------|-----------------------------------------------------------------------------|
+| `rank_df`   | DataFrame containing FIFA ranking data. Must include: `rank`, `name`, `points` |
+| `titles_df` | DataFrame containing World Cup titles. Must include: `team`, `wc_titles`   |
+| `weight`    | Integer value representing how many points each World Cup title adds to the rating |
+
+### Returns
+
+A DataFrame with the following columns:
+
+| Column            |
+|-------------------|
+| `fifa_rank`       |
+| `name`            |
+| `points`          |
+| `wc_titles`       |
+| `weighted_rating` |
+| `weighted_rank`   |
+
+### Notes
+
+This function merges the two datasets and computes a new rating using:
+
+```
+weighted_rating = points + (wc_titles × weight)
+```
+
+---
+
+## `compare_rank_changes`
+
+### Description
+
+Compares the original FIFA rank with the new weighted rank.
+
+### Arguments
+
+| Argument      | Description                                          |
+|---------------|------------------------------------------------------|
+| `df_weighted` | DataFrame returned from `calculate_weighted_rating`  |
+
+### Returns
+
+A DataFrame with:
+
+| Column          |
+|-----------------|
+| `name`          |
+| `fifa_rank`     |
+| `weighted_rank` |
+| `rank_change`   |
+
+### Notes
+
+```
+rank_change = fifa_rank − weighted_rank
+```
+
+A positive value means the team improved its position after including historical titles.
+
+---
+
+## `simulate_match`
+
+### Description
+
+Simulates a single match between two teams.
+
+### Arguments
+
+| Argument       | Description                                        |
+|----------------|----------------------------------------------------|
+| `team_a`       | Name of the first team                             |
+| `team_b`       | Name of the second team                            |
+| `df_weighted`  | DataFrame containing weighted ratings              |
+| `random_state` | Optional integer seed for reproducibility          |
+
+### Returns
+
+A string with the name of the winning team.
+
+### Notes
+
+The probability of team A winning is:
+
+```
+P(A wins) = rating_A / (rating_A + rating_B)
+```
+
+A random number is used to determine the winner.
+
+---
+
+## `simulate_match_n`
+
+### Description
+
+Simulates a match multiple times and returns win counts and percentages.
+
+### Arguments
+
+| Argument       | Description                                        |
+|----------------|----------------------------------------------------|
+| `team_a`       | Name of the first team                             |
+| `team_b`       | Name of the second team                            |
+| `df_weighted`  | DataFrame containing weighted ratings              |
+| `n`            | Number of simulations                              |
+| `random_state` | Optional seed for reproducibility                  |
+
+### Returns
+
+A DataFrame with:
+
+| Column    |
+|-----------|
+| `team`    |
+| `wins`    |
+| `win_pct` |
+
+### Notes
+
+This function is useful for estimating probabilities more reliably than a single simulation.
+
+---
+
+## `validate_weighted_rating`
+
+### Description
+
+Evaluates how well the weighted rating predicts match outcomes compared to raw FIFA points.
+
+### Arguments
+
+| Argument      | Description                                                                                      |
+|---------------|--------------------------------------------------------------------------------------------------|
+| `results_df`  | DataFrame containing historical match results. Must include: `home_team`, `away_team`, `home_score`, `away_score` |
+| `df_weighted` | DataFrame with FIFA points and weighted ratings                                                  |
+
+### Returns
+
+A DataFrame with:
+
+| Column                |
+|-----------------------|
+| `metric`              |
+| `correct_predictions` |
+| `total_matches`       |
+| `accuracy_pct`        |
+
+### Notes
+
+The function:
+
+- Filters matches where both teams are known
+- Removes draws
+- Compares actual winners to predicted winners
+- Calculates accuracy for both metrics
+
+---
+
+## `tune_weight`
+
+### Description
+
+Tests multiple title weight values and evaluates their prediction accuracy.
+
+### Arguments
+
+| Argument     | Description                       |
+|--------------|-----------------------------------|
+| `results_df` | Historical match results          |
+| `rank_df`    | FIFA ranking data                 |
+| `titles_df`  | World Cup title data              |
+| `weights`    | List of weight values to test     |
+
+### Returns
+
+A DataFrame with:
+
+| Column                |
+|-----------------------|
+| `weight`              |
+| `correct_predictions` |
+| `total_matches`       |
+| `accuracy_pct`        |
+
+### Notes
+
+This function helps answer the question:
+
+> How much should historical World Cup success influence team ratings?
+
+---
+
+## Summary
+
+The `wc-sim` package provides a simple and modular workflow for:
+
+- Building a custom rating system
+- Comparing ranking systems
+- Simulating match outcomes
+- Validating predictions
+- Testing model parameters
+
+Each function is designed to be easy to use and combine with others in a full analysis pipeline.

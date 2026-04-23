@@ -1,9 +1,14 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - index.qmd
+    - tutorial.qmd
+    - report.qmd
+    - reference.qmd
 
 website:
-  title: "wc-sim"
+  title: "Game Predictor"
   navbar:
     left:
       - href: index.qmd
@@ -24,4 +29,3 @@ format:
   html:
     theme: cosmo
     toc: true
-    number-sections: false

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>wc-sim – Game Predictor</title>
+<title>reference – Game Predictor</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -90,7 +90,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -102,7 +102,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Technical Report</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./reference.html"> 
+    <a class="nav-link active" href="./reference.html" aria-current="page"> 
 <span class="menu-text">API Reference</span></a>
   </li>  
 </ul>
@@ -131,95 +131,470 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#project-overview" id="toc-project-overview" class="nav-link active" data-scroll-target="#project-overview">Project Overview</a></li>
-  <li><a href="#motivating-question" id="toc-motivating-question" class="nav-link" data-scroll-target="#motivating-question">Motivating Question</a></li>
-  <li><a href="#project-components" id="toc-project-components" class="nav-link" data-scroll-target="#project-components">Project Components</a></li>
-  <li><a href="#quick-links" id="toc-quick-links" class="nav-link" data-scroll-target="#quick-links">Quick Links</a></li>
-  <li><a href="#main-functions" id="toc-main-functions" class="nav-link" data-scroll-target="#main-functions">Main Functions</a></li>
-  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">Data Sources</a></li>
+  <li><a href="#api-reference" id="toc-api-reference" class="nav-link active" data-scroll-target="#api-reference">API Reference</a>
+  <ul class="collapse">
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#calculate_weighted_rating" id="toc-calculate_weighted_rating" class="nav-link" data-scroll-target="#calculate_weighted_rating"><code>calculate_weighted_rating</code></a>
+  <ul class="collapse">
+  <li><a href="#description" id="toc-description" class="nav-link" data-scroll-target="#description">Description</a></li>
+  <li><a href="#arguments" id="toc-arguments" class="nav-link" data-scroll-target="#arguments">Arguments</a></li>
+  <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
+  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a></li>
+  </ul></li>
+  <li><a href="#compare_rank_changes" id="toc-compare_rank_changes" class="nav-link" data-scroll-target="#compare_rank_changes"><code>compare_rank_changes</code></a>
+  <ul class="collapse">
+  <li><a href="#description-1" id="toc-description-1" class="nav-link" data-scroll-target="#description-1">Description</a></li>
+  <li><a href="#arguments-1" id="toc-arguments-1" class="nav-link" data-scroll-target="#arguments-1">Arguments</a></li>
+  <li><a href="#returns-1" id="toc-returns-1" class="nav-link" data-scroll-target="#returns-1">Returns</a></li>
+  <li><a href="#notes-1" id="toc-notes-1" class="nav-link" data-scroll-target="#notes-1">Notes</a></li>
+  </ul></li>
+  <li><a href="#simulate_match" id="toc-simulate_match" class="nav-link" data-scroll-target="#simulate_match"><code>simulate_match</code></a>
+  <ul class="collapse">
+  <li><a href="#description-2" id="toc-description-2" class="nav-link" data-scroll-target="#description-2">Description</a></li>
+  <li><a href="#arguments-2" id="toc-arguments-2" class="nav-link" data-scroll-target="#arguments-2">Arguments</a></li>
+  <li><a href="#returns-2" id="toc-returns-2" class="nav-link" data-scroll-target="#returns-2">Returns</a></li>
+  <li><a href="#notes-2" id="toc-notes-2" class="nav-link" data-scroll-target="#notes-2">Notes</a></li>
+  </ul></li>
+  <li><a href="#simulate_match_n" id="toc-simulate_match_n" class="nav-link" data-scroll-target="#simulate_match_n"><code>simulate_match_n</code></a>
+  <ul class="collapse">
+  <li><a href="#description-3" id="toc-description-3" class="nav-link" data-scroll-target="#description-3">Description</a></li>
+  <li><a href="#arguments-3" id="toc-arguments-3" class="nav-link" data-scroll-target="#arguments-3">Arguments</a></li>
+  <li><a href="#returns-3" id="toc-returns-3" class="nav-link" data-scroll-target="#returns-3">Returns</a></li>
+  <li><a href="#notes-3" id="toc-notes-3" class="nav-link" data-scroll-target="#notes-3">Notes</a></li>
+  </ul></li>
+  <li><a href="#validate_weighted_rating" id="toc-validate_weighted_rating" class="nav-link" data-scroll-target="#validate_weighted_rating"><code>validate_weighted_rating</code></a>
+  <ul class="collapse">
+  <li><a href="#description-4" id="toc-description-4" class="nav-link" data-scroll-target="#description-4">Description</a></li>
+  <li><a href="#arguments-4" id="toc-arguments-4" class="nav-link" data-scroll-target="#arguments-4">Arguments</a></li>
+  <li><a href="#returns-4" id="toc-returns-4" class="nav-link" data-scroll-target="#returns-4">Returns</a></li>
+  <li><a href="#notes-4" id="toc-notes-4" class="nav-link" data-scroll-target="#notes-4">Notes</a></li>
+  </ul></li>
+  <li><a href="#tune_weight" id="toc-tune_weight" class="nav-link" data-scroll-target="#tune_weight"><code>tune_weight</code></a>
+  <ul class="collapse">
+  <li><a href="#description-5" id="toc-description-5" class="nav-link" data-scroll-target="#description-5">Description</a></li>
+  <li><a href="#arguments-5" id="toc-arguments-5" class="nav-link" data-scroll-target="#arguments-5">Arguments</a></li>
+  <li><a href="#returns-5" id="toc-returns-5" class="nav-link" data-scroll-target="#returns-5">Returns</a></li>
+  <li><a href="#notes-5" id="toc-notes-5" class="nav-link" data-scroll-target="#notes-5">Notes</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">wc-sim</h1>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
-<div class="quarto-title-meta">
 
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<section id="project-overview" class="level2">
-<h2 class="anchored" data-anchor-id="project-overview">Project Overview</h2>
-<p><strong>wc-sim</strong> is a Python package for simulating international soccer matches using a custom rating system.</p>
-<p>The main idea is simple:</p>
+<section id="api-reference" class="level1">
+<h1>API Reference</h1>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>This page describes the main functions available in the <code>wc-sim</code> package.</p>
+<p>These functions cover:</p>
 <ul>
-<li>start with current FIFA ranking points</li>
-<li>add a bonus based on historical FIFA World Cup titles</li>
-<li>validate whether this new rating predicts match outcomes better than raw FIFA points</li>
-<li>use the rating to simulate head-to-head matches</li>
+<li>Data wrangling</li>
+<li>Ranking comparison</li>
+<li>Match simulation</li>
+<li>Model validation</li>
+<li>Parameter tuning</li>
 </ul>
+<hr>
 </section>
-<section id="motivating-question" class="level2">
-<h2 class="anchored" data-anchor-id="motivating-question">Motivating Question</h2>
-<p>Can we build a more useful World Cup-style match simulator by combining a team’s current FIFA strength with its historical tournament success?</p>
+<section id="calculate_weighted_rating" class="level2">
+<h2 class="anchored" data-anchor-id="calculate_weighted_rating"><code>calculate_weighted_rating</code></h2>
+<section id="description" class="level3">
+<h3 class="anchored" data-anchor-id="description">Description</h3>
+<p>Builds a weighted rating table by combining FIFA ranking points with historical World Cup titles.</p>
 </section>
-<section id="project-components" class="level2">
-<h2 class="anchored" data-anchor-id="project-components">Project Components</h2>
-<p>This project includes:</p>
+<section id="arguments" class="level3">
+<h3 class="anchored" data-anchor-id="arguments">Arguments</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 85%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>rank_df</code></td>
+<td>DataFrame containing FIFA ranking data. Must include: <code>rank</code>, <code>name</code>, <code>points</code></td>
+</tr>
+<tr class="even">
+<td><code>titles_df</code></td>
+<td>DataFrame containing World Cup titles. Must include: <code>team</code>, <code>wc_titles</code></td>
+</tr>
+<tr class="odd">
+<td><code>weight</code></td>
+<td>Integer value representing how many points each World Cup title adds to the rating</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="returns" class="level3">
+<h3 class="anchored" data-anchor-id="returns">Returns</h3>
+<p>A DataFrame with the following columns:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>fifa_rank</code></td>
+</tr>
+<tr class="even">
+<td><code>name</code></td>
+</tr>
+<tr class="odd">
+<td><code>points</code></td>
+</tr>
+<tr class="even">
+<td><code>wc_titles</code></td>
+</tr>
+<tr class="odd">
+<td><code>weighted_rating</code></td>
+</tr>
+<tr class="even">
+<td><code>weighted_rank</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="notes" class="level3">
+<h3 class="anchored" data-anchor-id="notes">Notes</h3>
+<p>This function merges the two datasets and computes a new rating using:</p>
+<pre><code>weighted_rating = points + (wc_titles × weight)</code></pre>
+<hr>
+</section>
+</section>
+<section id="compare_rank_changes" class="level2">
+<h2 class="anchored" data-anchor-id="compare_rank_changes"><code>compare_rank_changes</code></h2>
+<section id="description-1" class="level3">
+<h3 class="anchored" data-anchor-id="description-1">Description</h3>
+<p>Compares the original FIFA rank with the new weighted rank.</p>
+</section>
+<section id="arguments-1" class="level3">
+<h3 class="anchored" data-anchor-id="arguments-1">Arguments</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>df_weighted</code></td>
+<td>DataFrame returned from <code>calculate_weighted_rating</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="returns-1" class="level3">
+<h3 class="anchored" data-anchor-id="returns-1">Returns</h3>
+<p>A DataFrame with:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>name</code></td>
+</tr>
+<tr class="even">
+<td><code>fifa_rank</code></td>
+</tr>
+<tr class="odd">
+<td><code>weighted_rank</code></td>
+</tr>
+<tr class="even">
+<td><code>rank_change</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="notes-1" class="level3">
+<h3 class="anchored" data-anchor-id="notes-1">Notes</h3>
+<pre><code>rank_change = fifa_rank − weighted_rank</code></pre>
+<p>A positive value means the team improved its position after including historical titles.</p>
+<hr>
+</section>
+</section>
+<section id="simulate_match" class="level2">
+<h2 class="anchored" data-anchor-id="simulate_match"><code>simulate_match</code></h2>
+<section id="description-2" class="level3">
+<h3 class="anchored" data-anchor-id="description-2">Description</h3>
+<p>Simulates a single match between two teams.</p>
+</section>
+<section id="arguments-2" class="level3">
+<h3 class="anchored" data-anchor-id="arguments-2">Arguments</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>team_a</code></td>
+<td>Name of the first team</td>
+</tr>
+<tr class="even">
+<td><code>team_b</code></td>
+<td>Name of the second team</td>
+</tr>
+<tr class="odd">
+<td><code>df_weighted</code></td>
+<td>DataFrame containing weighted ratings</td>
+</tr>
+<tr class="even">
+<td><code>random_state</code></td>
+<td>Optional integer seed for reproducibility</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="returns-2" class="level3">
+<h3 class="anchored" data-anchor-id="returns-2">Returns</h3>
+<p>A string with the name of the winning team.</p>
+</section>
+<section id="notes-2" class="level3">
+<h3 class="anchored" data-anchor-id="notes-2">Notes</h3>
+<p>The probability of team A winning is:</p>
+<pre><code>P(A wins) = rating_A / (rating_A + rating_B)</code></pre>
+<p>A random number is used to determine the winner.</p>
+<hr>
+</section>
+</section>
+<section id="simulate_match_n" class="level2">
+<h2 class="anchored" data-anchor-id="simulate_match_n"><code>simulate_match_n</code></h2>
+<section id="description-3" class="level3">
+<h3 class="anchored" data-anchor-id="description-3">Description</h3>
+<p>Simulates a match multiple times and returns win counts and percentages.</p>
+</section>
+<section id="arguments-3" class="level3">
+<h3 class="anchored" data-anchor-id="arguments-3">Arguments</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>team_a</code></td>
+<td>Name of the first team</td>
+</tr>
+<tr class="even">
+<td><code>team_b</code></td>
+<td>Name of the second team</td>
+</tr>
+<tr class="odd">
+<td><code>df_weighted</code></td>
+<td>DataFrame containing weighted ratings</td>
+</tr>
+<tr class="even">
+<td><code>n</code></td>
+<td>Number of simulations</td>
+</tr>
+<tr class="odd">
+<td><code>random_state</code></td>
+<td>Optional seed for reproducibility</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="returns-3" class="level3">
+<h3 class="anchored" data-anchor-id="returns-3">Returns</h3>
+<p>A DataFrame with:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>team</code></td>
+</tr>
+<tr class="even">
+<td><code>wins</code></td>
+</tr>
+<tr class="odd">
+<td><code>win_pct</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="notes-3" class="level3">
+<h3 class="anchored" data-anchor-id="notes-3">Notes</h3>
+<p>This function is useful for estimating probabilities more reliably than a single simulation.</p>
+<hr>
+</section>
+</section>
+<section id="validate_weighted_rating" class="level2">
+<h2 class="anchored" data-anchor-id="validate_weighted_rating"><code>validate_weighted_rating</code></h2>
+<section id="description-4" class="level3">
+<h3 class="anchored" data-anchor-id="description-4">Description</h3>
+<p>Evaluates how well the weighted rating predicts match outcomes compared to raw FIFA points.</p>
+</section>
+<section id="arguments-4" class="level3">
+<h3 class="anchored" data-anchor-id="arguments-4">Arguments</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 86%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>results_df</code></td>
+<td>DataFrame containing historical match results. Must include: <code>home_team</code>, <code>away_team</code>, <code>home_score</code>, <code>away_score</code></td>
+</tr>
+<tr class="even">
+<td><code>df_weighted</code></td>
+<td>DataFrame with FIFA points and weighted ratings</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="returns-4" class="level3">
+<h3 class="anchored" data-anchor-id="returns-4">Returns</h3>
+<p>A DataFrame with:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>metric</code></td>
+</tr>
+<tr class="even">
+<td><code>correct_predictions</code></td>
+</tr>
+<tr class="odd">
+<td><code>total_matches</code></td>
+</tr>
+<tr class="even">
+<td><code>accuracy_pct</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="notes-4" class="level3">
+<h3 class="anchored" data-anchor-id="notes-4">Notes</h3>
+<p>The function:</p>
 <ul>
-<li>a Python package for data wrangling, simulation, and validation</li>
-<li>a Streamlit app for head-to-head match simulation</li>
-<li>a tutorial for installation and package use</li>
-<li>a technical report explaining the methodology and results</li>
+<li>Filters matches where both teams are known</li>
+<li>Removes draws</li>
+<li>Compares actual winners to predicted winners</li>
+<li>Calculates accuracy for both metrics</li>
 </ul>
+<hr>
 </section>
-<section id="quick-links" class="level2">
-<h2 class="anchored" data-anchor-id="quick-links">Quick Links</h2>
-<ul>
-<li><a href="tutorial.html">Tutorial</a></li>
-<li><a href="report.html">Technical Report</a></li>
-<li><a href="reference.html">API Reference</a></li>
-<li><a href="https://game-predictor-g66jsocnan5fdee67p8ben.streamlit.app/">Streamlit App</a></li>
-<li><a href="https://github.com/santiago28b/game-predictor">GitHub Repository</a></li>
-</ul>
 </section>
-<section id="main-functions" class="level2">
-<h2 class="anchored" data-anchor-id="main-functions">Main Functions</h2>
-<p>The package currently includes these main functions:</p>
-<ul>
-<li><code>calculate_weighted_rating()</code></li>
-<li><code>compare_rank_changes()</code></li>
-<li><code>simulate_match()</code></li>
-<li><code>simulate_match_n()</code></li>
-<li><code>validate_weighted_rating()</code></li>
-<li><code>tune_weight()</code></li>
-</ul>
+<section id="tune_weight" class="level2">
+<h2 class="anchored" data-anchor-id="tune_weight"><code>tune_weight</code></h2>
+<section id="description-5" class="level3">
+<h3 class="anchored" data-anchor-id="description-5">Description</h3>
+<p>Tests multiple title weight values and evaluates their prediction accuracy.</p>
 </section>
-<section id="data-sources" class="level2">
-<h2 class="anchored" data-anchor-id="data-sources">Data Sources</h2>
-<p>This project uses:</p>
+<section id="arguments-5" class="level3">
+<h3 class="anchored" data-anchor-id="arguments-5">Arguments</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>results_df</code></td>
+<td>Historical match results</td>
+</tr>
+<tr class="even">
+<td><code>rank_df</code></td>
+<td>FIFA ranking data</td>
+</tr>
+<tr class="odd">
+<td><code>titles_df</code></td>
+<td>World Cup title data</td>
+</tr>
+<tr class="even">
+<td><code>weights</code></td>
+<td>List of weight values to test</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="returns-5" class="level3">
+<h3 class="anchored" data-anchor-id="returns-5">Returns</h3>
+<p>A DataFrame with:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>weight</code></td>
+</tr>
+<tr class="even">
+<td><code>correct_predictions</code></td>
+</tr>
+<tr class="odd">
+<td><code>total_matches</code></td>
+</tr>
+<tr class="even">
+<td><code>accuracy_pct</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="notes-5" class="level3">
+<h3 class="anchored" data-anchor-id="notes-5">Notes</h3>
+<p>This function helps answer the question:</p>
+<blockquote class="blockquote">
+<p>How much should historical World Cup success influence team ratings?</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>The <code>wc-sim</code> package provides a simple and modular workflow for:</p>
 <ul>
-<li>current FIFA rankings</li>
-<li>a curated table of World Cup title counts</li>
-<li>historical international match results for validation</li>
+<li>Building a custom rating system</li>
+<li>Comparing ranking systems</li>
+<li>Simulating match outcomes</li>
+<li>Validating predictions</li>
+<li>Testing model parameters</li>
 </ul>
-<p>The data collection and cleaning workflow is documented in the repository, including the notebook used to assemble the dataset.</p>
+<p>Each function is designed to be easy to use and combine with others in a full analysis pipeline.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
