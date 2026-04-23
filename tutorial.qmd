@@ -190,7 +190,7 @@ Test whether the weighted rating predicts outcomes better than FIFA points.
 ```python
 from wc_sim import validate_weighted_rating
 
-results_df = pd.read_csv("data/results.csv")
+results_df = pd.read_csv("path_to_your_results_dataset.csv")
 summary = validate_weighted_rating(results_df, df_weighted)
 print(summary)
 ```
