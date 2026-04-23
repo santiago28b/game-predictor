@@ -4,7 +4,7 @@
     "href": "reference.html",
     "title": "API Reference",
     "section": "",
-    "text": "This page describes the main functions available in the wc-sim package.\nThese functions cover:\n\nData wrangling\nRanking comparison\nMatch simulation\nModel validation\nParameter tuning\n\n\n\n\n\n\n\nBuilds a weighted rating table by combining FIFA ranking points with historical World Cup titles.\n\n\n\n\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\nrank_df\nDataFrame containing FIFA ranking data. Must include: rank, name, points\n\n\ntitles_df\nDataFrame containing World Cup titles. Must include: team, wc_titles\n\n\nweight\nInteger value representing how many points each World Cup title adds to the rating\n\n\n\n\n\n\nA DataFrame with the following columns:\n\n\n\nColumn\n\n\n\n\nfifa_rank\n\n\nname\n\n\npoints\n\n\nwc_titles\n\n\nweighted_rating\n\n\nweighted_rank\n\n\n\n\n\n\nThis function merges the two datasets and computes a new rating using:\nweighted_rating = points + (wc_titles × weight)\n\n\n\n\n\n\n\nCompares the original FIFA rank with the new weighted rank.\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\ndf_weighted\nDataFrame returned from calculate_weighted_rating\n\n\n\n\n\n\nA DataFrame with:\n\n\n\nColumn\n\n\n\n\nname\n\n\nfifa_rank\n\n\nweighted_rank\n\n\nrank_change\n\n\n\n\n\n\nrank_change = fifa_rank − weighted_rank\nA positive value means the team improved its position after including historical titles.\n\n\n\n\n\n\n\nSimulates a single match between two teams.\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\nteam_a\nName of the first team\n\n\nteam_b\nName of the second team\n\n\ndf_weighted\nDataFrame containing weighted ratings\n\n\nrandom_state\nOptional integer seed for reproducibility\n\n\n\n\n\n\nA string with the name of the winning team.\n\n\n\nThe probability of team A winning is:\nP(A wins) = rating_A / (rating_A + rating_B)\nA random number is used to determine the winner.\n\n\n\n\n\n\n\nSimulates a match multiple times and returns win counts and percentages.\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\nteam_a\nName of the first team\n\n\nteam_b\nName of the second team\n\n\ndf_weighted\nDataFrame containing weighted ratings\n\n\nn\nNumber of simulations\n\n\nrandom_state\nOptional seed for reproducibility\n\n\n\n\n\n\nA DataFrame with:\n\n\n\nColumn\n\n\n\n\nteam\n\n\nwins\n\n\nwin_pct\n\n\n\n\n\n\nThis function is useful for estimating probabilities more reliably than a single simulation.\n\n\n\n\n\n\n\nEvaluates how well the weighted rating predicts match outcomes compared to raw FIFA points.\n\n\n\n\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\nresults_df\nDataFrame containing historical match results. Must include: home_team, away_team, home_score, away_score\n\n\ndf_weighted\nDataFrame with FIFA points and weighted ratings\n\n\n\n\n\n\nA DataFrame with:\n\n\n\nColumn\n\n\n\n\nmetric\n\n\ncorrect_predictions\n\n\ntotal_matches\n\n\naccuracy_pct\n\n\n\n\n\n\nThe function:\n\nFilters matches where both teams are known\nRemoves draws\nCompares actual winners to predicted winners\nCalculates accuracy for both metrics\n\n\n\n\n\n\n\n\nTests multiple title weight values and evaluates their prediction accuracy.\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\nresults_df\nHistorical match results\n\n\nrank_df\nFIFA ranking data\n\n\ntitles_df\nWorld Cup title data\n\n\nweights\nList of weight values to test\n\n\n\n\n\n\nA DataFrame with:\n\n\n\nColumn\n\n\n\n\nweight\n\n\ncorrect_predictions\n\n\ntotal_matches\n\n\naccuracy_pct\n\n\n\n\n\n\nThis function helps answer the question:\n\nHow much should historical World Cup success influence team ratings?\n\n\n\n\n\n\nThe wc-sim package provides a simple and modular workflow for:\n\nBuilding a custom rating system\nComparing ranking systems\nSimulating match outcomes\nValidating predictions\nTesting model parameters\n\nEach function is designed to be easy to use and combine with others in a full analysis pipeline."
+    "text": "This page describes the main functions available in the wc-sim package.\nThese functions cover:\n\nData wrangling\nRanking comparison\nMatch simulation\nModel validation\nParameter tuning"
   },
   {
     "objectID": "reference.html#overview",
@@ -17,64 +17,64 @@
     "objectID": "reference.html#calculate_weighted_rating",
     "href": "reference.html#calculate_weighted_rating",
     "title": "API Reference",
-    "section": "",
-    "text": "Builds a weighted rating table by combining FIFA ranking points with historical World Cup titles.\n\n\n\n\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\nrank_df\nDataFrame containing FIFA ranking data. Must include: rank, name, points\n\n\ntitles_df\nDataFrame containing World Cup titles. Must include: team, wc_titles\n\n\nweight\nInteger value representing how many points each World Cup title adds to the rating\n\n\n\n\n\n\nA DataFrame with the following columns:\n\n\n\nColumn\n\n\n\n\nfifa_rank\n\n\nname\n\n\npoints\n\n\nwc_titles\n\n\nweighted_rating\n\n\nweighted_rank\n\n\n\n\n\n\nThis function merges the two datasets and computes a new rating using:\nweighted_rating = points + (wc_titles × weight)"
+    "section": "calculate_weighted_rating",
+    "text": "calculate_weighted_rating\n\nDescription\nBuilds a weighted rating table by combining FIFA ranking points with historical World Cup titles.\n\n\nArguments\n\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\nrank_df\nDataFrame containing FIFA ranking data. Must include: rank, name, points\n\n\ntitles_df\nDataFrame containing World Cup titles. Must include: team, wc_titles\n\n\nweight\nInteger value representing how many points each World Cup title adds to the rating\n\n\n\n\n\nReturns\nA DataFrame with the following columns:\n\n\n\nColumn\n\n\n\n\nfifa_rank\n\n\nname\n\n\npoints\n\n\nwc_titles\n\n\nweighted_rating\n\n\nweighted_rank\n\n\n\n\n\nNotes\nThis function merges the two datasets and computes a new rating using:\nweighted_rating = points + (wc_titles × weight)"
   },
   {
     "objectID": "reference.html#compare_rank_changes",
     "href": "reference.html#compare_rank_changes",
     "title": "API Reference",
-    "section": "",
-    "text": "Compares the original FIFA rank with the new weighted rank.\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\ndf_weighted\nDataFrame returned from calculate_weighted_rating\n\n\n\n\n\n\nA DataFrame with:\n\n\n\nColumn\n\n\n\n\nname\n\n\nfifa_rank\n\n\nweighted_rank\n\n\nrank_change\n\n\n\n\n\n\nrank_change = fifa_rank − weighted_rank\nA positive value means the team improved its position after including historical titles."
+    "section": "compare_rank_changes",
+    "text": "compare_rank_changes\n\nDescription\nCompares the original FIFA rank with the new weighted rank.\n\n\nArguments\n\n\n\nArgument\nDescription\n\n\n\n\ndf_weighted\nDataFrame returned from calculate_weighted_rating\n\n\n\n\n\nReturns\nA DataFrame with:\n\n\n\nColumn\n\n\n\n\nname\n\n\nfifa_rank\n\n\nweighted_rank\n\n\nrank_change\n\n\n\n\n\nNotes\nrank_change = fifa_rank − weighted_rank\nA positive value means the team improved its position after including historical titles."
   },
   {
     "objectID": "reference.html#simulate_match",
     "href": "reference.html#simulate_match",
     "title": "API Reference",
-    "section": "",
-    "text": "Simulates a single match between two teams.\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\nteam_a\nName of the first team\n\n\nteam_b\nName of the second team\n\n\ndf_weighted\nDataFrame containing weighted ratings\n\n\nrandom_state\nOptional integer seed for reproducibility\n\n\n\n\n\n\nA string with the name of the winning team.\n\n\n\nThe probability of team A winning is:\nP(A wins) = rating_A / (rating_A + rating_B)\nA random number is used to determine the winner."
+    "section": "simulate_match",
+    "text": "simulate_match\n\nDescription\nSimulates a single match between two teams.\n\n\nArguments\n\n\n\nArgument\nDescription\n\n\n\n\nteam_a\nName of the first team\n\n\nteam_b\nName of the second team\n\n\ndf_weighted\nDataFrame containing weighted ratings\n\n\nrandom_state\nOptional integer seed for reproducibility\n\n\n\n\n\nReturns\nA string with the name of the winning team.\n\n\nNotes\nThe probability of team A winning is:\nP(A wins) = rating_A / (rating_A + rating_B)\nA random number is used to determine the winner."
   },
   {
     "objectID": "reference.html#simulate_match_n",
     "href": "reference.html#simulate_match_n",
     "title": "API Reference",
-    "section": "",
-    "text": "Simulates a match multiple times and returns win counts and percentages.\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\nteam_a\nName of the first team\n\n\nteam_b\nName of the second team\n\n\ndf_weighted\nDataFrame containing weighted ratings\n\n\nn\nNumber of simulations\n\n\nrandom_state\nOptional seed for reproducibility\n\n\n\n\n\n\nA DataFrame with:\n\n\n\nColumn\n\n\n\n\nteam\n\n\nwins\n\n\nwin_pct\n\n\n\n\n\n\nThis function is useful for estimating probabilities more reliably than a single simulation."
+    "section": "simulate_match_n",
+    "text": "simulate_match_n\n\nDescription\nSimulates a match multiple times and returns win counts and percentages.\n\n\nArguments\n\n\n\nArgument\nDescription\n\n\n\n\nteam_a\nName of the first team\n\n\nteam_b\nName of the second team\n\n\ndf_weighted\nDataFrame containing weighted ratings\n\n\nn\nNumber of simulations\n\n\nrandom_state\nOptional seed for reproducibility\n\n\n\n\n\nReturns\nA DataFrame with:\n\n\n\nColumn\n\n\n\n\nteam\n\n\nwins\n\n\nwin_pct\n\n\n\n\n\nNotes\nThis function is useful for estimating probabilities more reliably than a single simulation."
   },
   {
     "objectID": "reference.html#validate_weighted_rating",
     "href": "reference.html#validate_weighted_rating",
     "title": "API Reference",
-    "section": "",
-    "text": "Evaluates how well the weighted rating predicts match outcomes compared to raw FIFA points.\n\n\n\n\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\nresults_df\nDataFrame containing historical match results. Must include: home_team, away_team, home_score, away_score\n\n\ndf_weighted\nDataFrame with FIFA points and weighted ratings\n\n\n\n\n\n\nA DataFrame with:\n\n\n\nColumn\n\n\n\n\nmetric\n\n\ncorrect_predictions\n\n\ntotal_matches\n\n\naccuracy_pct\n\n\n\n\n\n\nThe function:\n\nFilters matches where both teams are known\nRemoves draws\nCompares actual winners to predicted winners\nCalculates accuracy for both metrics"
+    "section": "validate_weighted_rating",
+    "text": "validate_weighted_rating\n\nDescription\nEvaluates how well the weighted rating predicts match outcomes compared to raw FIFA points.\n\n\nArguments\n\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\nresults_df\nDataFrame containing historical match results. Must include: home_team, away_team, home_score, away_score\n\n\ndf_weighted\nDataFrame with FIFA points and weighted ratings\n\n\n\n\n\nReturns\nA DataFrame with:\n\n\n\nColumn\n\n\n\n\nmetric\n\n\ncorrect_predictions\n\n\ntotal_matches\n\n\naccuracy_pct\n\n\n\n\n\nNotes\nThe function:\n\nFilters matches where both teams are known\nRemoves draws\nCompares actual winners to predicted winners\nCalculates accuracy for both metrics"
   },
   {
     "objectID": "reference.html#tune_weight",
     "href": "reference.html#tune_weight",
     "title": "API Reference",
-    "section": "",
-    "text": "Tests multiple title weight values and evaluates their prediction accuracy.\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\nresults_df\nHistorical match results\n\n\nrank_df\nFIFA ranking data\n\n\ntitles_df\nWorld Cup title data\n\n\nweights\nList of weight values to test\n\n\n\n\n\n\nA DataFrame with:\n\n\n\nColumn\n\n\n\n\nweight\n\n\ncorrect_predictions\n\n\ntotal_matches\n\n\naccuracy_pct\n\n\n\n\n\n\nThis function helps answer the question:\n\nHow much should historical World Cup success influence team ratings?"
+    "section": "tune_weight",
+    "text": "tune_weight\n\nDescription\nTests multiple title weight values and evaluates their prediction accuracy.\n\n\nArguments\n\n\n\nArgument\nDescription\n\n\n\n\nresults_df\nHistorical match results\n\n\nrank_df\nFIFA ranking data\n\n\ntitles_df\nWorld Cup title data\n\n\nweights\nList of weight values to test\n\n\n\n\n\nReturns\nA DataFrame with:\n\n\n\nColumn\n\n\n\n\nweight\n\n\ncorrect_predictions\n\n\ntotal_matches\n\n\naccuracy_pct\n\n\n\n\n\nNotes\nThis function helps answer the question:\n\nHow much should historical World Cup success influence team ratings?"
   },
   {
     "objectID": "reference.html#summary",
     "href": "reference.html#summary",
     "title": "API Reference",
-    "section": "",
-    "text": "The wc-sim package provides a simple and modular workflow for:\n\nBuilding a custom rating system\nComparing ranking systems\nSimulating match outcomes\nValidating predictions\nTesting model parameters\n\nEach function is designed to be easy to use and combine with others in a full analysis pipeline."
+    "section": "Summary",
+    "text": "Summary\nThe wc-sim package provides a simple and modular workflow for:\n\nBuilding a custom rating system\nComparing ranking systems\nSimulating match outcomes\nValidating predictions\nTesting model parameters\n\nEach function is designed to be easy to use and combine with others in a full analysis pipeline."
   },
   {
     "objectID": "tutorial.html",
     "href": "tutorial.html",
     "title": "Tutorial",
     "section": "",
-    "text": "Clone the repository:\n```bash git clone https://github.com/santiago28b/game-predictor.git cd game-predictor"
+    "text": "This tutorial shows how to install and use the wc-sim package.\nThe package helps you:\n\nLoad FIFA ranking data and World Cup title data\nCreate a custom weighted rating\nCompare how teams move in the rankings\nSimulate head-to-head matches\nValidate the rating against historical match results\nTest multiple title weights"
   },
   {
     "objectID": "tutorial.html#installation",
     "href": "tutorial.html#installation",
     "title": "Tutorial",
-    "section": "",
-    "text": "Clone the repository:\n```bash git clone https://github.com/santiago28b/game-predictor.git cd game-predictor"
+    "section": "Installation",
+    "text": "Installation\nClone the repository:\ngit clone https://github.com/santiago28b/game-predictor.git\ncd game-predictor\nInstall the package locally:\npip install -e .\nIf you also want development tools like testing and Quarto support, run:\npip install -e .[dev]"
   },
   {
     "objectID": "index.html",
@@ -124,5 +124,89 @@
     "title": "wc-sim",
     "section": "Data Sources",
     "text": "Data Sources\nThis project uses:\n\ncurrent FIFA rankings\na curated table of World Cup title counts\nhistorical international match results for validation\n\nThe data collection and cleaning workflow is documented in the repository, including the notebook used to assemble the dataset."
+  },
+  {
+    "objectID": "tutorial.html#overview",
+    "href": "tutorial.html#overview",
+    "title": "Tutorial",
+    "section": "",
+    "text": "This tutorial shows how to install and use the wc-sim package.\nThe package helps you:\n\nLoad FIFA ranking data and World Cup title data\nCreate a custom weighted rating\nCompare how teams move in the rankings\nSimulate head-to-head matches\nValidate the rating against historical match results\nTest multiple title weights"
+  },
+  {
+    "objectID": "tutorial.html#load-the-data",
+    "href": "tutorial.html#load-the-data",
+    "title": "Tutorial",
+    "section": "Load the Data",
+    "text": "Load the Data\nFirst, import pandas and the main package function.\nimport pandas as pd\nfrom wc_sim import calculate_weighted_rating\nNow load the ranking and title data from the data folder.\nranks = pd.read_csv(\"data/rankings.csv\")\ntitles = pd.read_csv(\"data/titles.csv\")\nYou can inspect the first few rows:\nprint(ranks.head())\nprint(titles.head())\nThe rankings table should contain:\n\n\n\nColumn\n\n\n\n\nrank\n\n\nname\n\n\npoints\n\n\n\nThe titles table should contain:\n\n\n\nColumn\n\n\n\n\nteam\n\n\nwc_titles"
+  },
+  {
+    "objectID": "tutorial.html#build-the-weighted-rating-table",
+    "href": "tutorial.html#build-the-weighted-rating-table",
+    "title": "Tutorial",
+    "section": "Build the Weighted Rating Table",
+    "text": "Build the Weighted Rating Table\nCreate the weighted rating table:\ndf_weighted = calculate_weighted_rating(ranks, titles, weight=50)\nprint(df_weighted.head())\nThis function combines current FIFA points with historical World Cup titles.\nThe idea is:\nweighted_rating = FIFA points + (wc_titles × weight)\nThe output includes:\n\n\n\nColumn\n\n\n\n\nfifa_rank\n\n\nname\n\n\npoints\n\n\nwc_titles\n\n\nweighted_rating\n\n\nweighted_rank"
+  },
+  {
+    "objectID": "tutorial.html#compare-rank-changes",
+    "href": "tutorial.html#compare-rank-changes",
+    "title": "Tutorial",
+    "section": "Compare Rank Changes",
+    "text": "Compare Rank Changes\nCheck which teams move the most after including World Cup titles.\nfrom wc_sim import compare_rank_changes\n\nchanges = compare_rank_changes(df_weighted)\nprint(changes.head(10))\nThis produces:\n\n\n\nColumn\n\n\n\n\nname\n\n\nfifa_rank\n\n\nweighted_rank\n\n\nrank_change\n\n\n\nA positive rank_change means the team improved in the ranking."
+  },
+  {
+    "objectID": "tutorial.html#simulate-one-match",
+    "href": "tutorial.html#simulate-one-match",
+    "title": "Tutorial",
+    "section": "Simulate One Match",
+    "text": "Simulate One Match\nSimulate a single match between two teams.\nfrom wc_sim import simulate_match\n\nwinner = simulate_match(\"Brazil\", \"Argentina\", df_weighted, random_state=42)\nprint(winner)\nThis returns the name of the winning team.\nThe probability is computed as:\nP(A wins) = rating_A / (rating_A + rating_B)"
+  },
+  {
+    "objectID": "tutorial.html#simulate-many-matches",
+    "href": "tutorial.html#simulate-many-matches",
+    "title": "Tutorial",
+    "section": "Simulate Many Matches",
+    "text": "Simulate Many Matches\nSimulate many matches for better estimates.\nfrom wc_sim import simulate_match_n\n\nresults = simulate_match_n(\"Brazil\", \"Argentina\", df_weighted, n=1000, random_state=42)\nprint(results)\nThe result includes:\n\n\n\nColumn\n\n\n\n\nteam\n\n\nwins\n\n\nwin_pct\n\n\n\nExample output:\n\n\n\nTeam\nWins\nWin %\n\n\n\n\nBrazil\n560\n56%\n\n\nArgentina\n440\n44%"
+  },
+  {
+    "objectID": "tutorial.html#validate-the-weighted-rating",
+    "href": "tutorial.html#validate-the-weighted-rating",
+    "title": "Tutorial",
+    "section": "Validate the Weighted Rating",
+    "text": "Validate the Weighted Rating\nTest whether the weighted rating predicts outcomes better than FIFA points.\nfrom wc_sim import validate_weighted_rating\n\nresults_df = pd.read_csv(\"path_to_your_results_dataset.csv\")\nsummary = validate_weighted_rating(results_df, df_weighted)\nprint(summary)\nThe results dataset must contain:\n\n\n\nColumn\n\n\n\n\nhome_team\n\n\naway_team\n\n\nhome_score\n\n\naway_score\n\n\n\nThe output compares prediction accuracy using:\n\nFIFA points\nWeighted rating"
+  },
+  {
+    "objectID": "tutorial.html#test-multiple-weights",
+    "href": "tutorial.html#test-multiple-weights",
+    "title": "Tutorial",
+    "section": "Test Multiple Weights",
+    "text": "Test Multiple Weights\nInstead of choosing one weight, test several.\nfrom wc_sim import tune_weight\n\nweight_results = tune_weight(\n    results_df,\n    ranks,\n    titles,\n    weights=[0, 25, 50, 75, 100]\n)\n\nprint(weight_results)\nThis shows accuracy for each weight and helps justify which weight to use."
+  },
+  {
+    "objectID": "tutorial.html#run-the-streamlit-app",
+    "href": "tutorial.html#run-the-streamlit-app",
+    "title": "Tutorial",
+    "section": "Run the Streamlit App",
+    "text": "Run the Streamlit App\nRun the app with:\nstreamlit run app.py\nThe app allows users to:\n\nChoose two teams\nSet the title weight\nRun simulations\nCompare ratings\nExplore rank changes"
+  },
+  {
+    "objectID": "tutorial.html#typical-workflow",
+    "href": "tutorial.html#typical-workflow",
+    "title": "Tutorial",
+    "section": "Typical Workflow",
+    "text": "Typical Workflow\nStep 1: Load data\nimport pandas as pd\nfrom wc_sim import calculate_weighted_rating\n\nranks = pd.read_csv(\"data/rankings.csv\")\ntitles = pd.read_csv(\"data/titles.csv\")\nresults_df = pd.read_csv(\"data/path_to_your_results_dataset.csv\")\nStep 2: Build rating\ndf_weighted = calculate_weighted_rating(ranks, titles, weight=50)\nStep 3: Compare ranks\nfrom wc_sim import compare_rank_changes\n\nchanges = compare_rank_changes(df_weighted)\nprint(changes.head())\nStep 4: Validate model\nfrom wc_sim import validate_weighted_rating\n\nsummary = validate_weighted_rating(results_df, df_weighted)\nprint(summary)\nStep 5: Simulate matches\nfrom wc_sim import simulate_match_n\n\nsim_results = simulate_match_n(\"Brazil\", \"Germany\", df_weighted, n=5000, random_state=42)\nprint(sim_results)\nStep 6: Tune weight\nfrom wc_sim import tune_weight\n\nbest_weights = tune_weight(results_df, ranks, titles, weights=[0, 25, 50, 75, 100])\nprint(best_weights)"
+  },
+  {
+    "objectID": "tutorial.html#notes-and-limitations",
+    "href": "tutorial.html#notes-and-limitations",
+    "title": "Tutorial",
+    "section": "Notes and Limitations",
+    "text": "Notes and Limitations\nThis model is simple and interpretable.\nIt does not include:\n\nDraw probability\nHome-field advantage\nInjuries\nRecent form beyond rankings\nAdvanced metrics like expected goals\n\n\nIt should be used as a simple analytical tool, not a full prediction system."
+  },
+  {
+    "objectID": "tutorial.html#summary",
+    "href": "tutorial.html#summary",
+    "title": "Tutorial",
+    "section": "Summary",
+    "text": "Summary\nIn this tutorial you learned how to:\n\nInstall the package\nLoad data\nBuild the weighted rating\nCompare rankings\nSimulate matches\nValidate results\nTest different weights\nRun the Streamlit app\n\nFor more details, see the Technical Report."
   }
 ]
