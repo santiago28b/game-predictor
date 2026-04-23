@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>report – Game Predictor</title>
+<title>Technical Report – Game Predictor</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -126,17 +126,148 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#motivating-question" id="toc-motivating-question" class="nav-link active" data-scroll-target="#motivating-question">Motivating Question</a></li>
+  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">Data Sources</a></li>
+  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling">Data Wrangling</a></li>
+  <li><a href="#analysis-workflow" id="toc-analysis-workflow" class="nav-link" data-scroll-target="#analysis-workflow">Analysis Workflow</a>
+  <ul class="collapse">
+  <li><a href="#build-a-weighted-ranking-table" id="toc-build-a-weighted-ranking-table" class="nav-link" data-scroll-target="#build-a-weighted-ranking-table">1. Build a weighted ranking table</a></li>
+  <li><a href="#validate-the-rating" id="toc-validate-the-rating" class="nav-link" data-scroll-target="#validate-the-rating">2. Validate the rating</a></li>
+  <li><a href="#simulate-matches" id="toc-simulate-matches" class="nav-link" data-scroll-target="#simulate-matches">3. Simulate matches</a></li>
+  </ul></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key Takeaways</a></li>
+  <li><a href="#added-improvement-weight-tuning" id="toc-added-improvement-weight-tuning" class="nav-link" data-scroll-target="#added-improvement-weight-tuning">Added Improvement: Weight Tuning</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Technical Report</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
 
 
+</header>
 
+
+<section id="motivating-question" class="level2">
+<h2 class="anchored" data-anchor-id="motivating-question">Motivating Question</h2>
+<p>Can we improve an international soccer match simulator by combining current FIFA points with historical FIFA World Cup success?</p>
+<p>Most rating systems focus mainly on present performance. This project tests whether adding a small historical prestige component can improve prediction accuracy for international match outcomes.</p>
+</section>
+<section id="data-sources" class="level2">
+<h2 class="anchored" data-anchor-id="data-sources">Data Sources</h2>
+<p>This project uses three main data sources:</p>
+<ol type="1">
+<li><strong>Current FIFA rankings</strong> with team names and point totals<br>
+</li>
+<li><strong>World Cup title counts</strong> for nations that have won the tournament<br>
+</li>
+<li><strong>Historical international match results</strong> used to validate the model</li>
+</ol>
+<p>The ranking and titles data are stored in the <code>data/</code> folder. Historical results are used during validation. The repository also includes a notebook documenting the data collection process.</p>
+</section>
+<section id="data-wrangling" class="level2">
+<h2 class="anchored" data-anchor-id="data-wrangling">Data Wrangling</h2>
+<p>The main wrangling step is merging current FIFA rankings with historical World Cup title counts.</p>
+<p>The weighted rating is defined as:</p>
+<p>[ = + ( ) ]</p>
+<p>This creates a new score that keeps current performance as the main signal while still allowing historical success to have some influence.</p>
+</section>
+<section id="analysis-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-workflow">Analysis Workflow</h2>
+<p>The project includes three main analysis steps:</p>
+<section id="build-a-weighted-ranking-table" class="level3">
+<h3 class="anchored" data-anchor-id="build-a-weighted-ranking-table">1. Build a weighted ranking table</h3>
+<p>The package creates a table with:</p>
+<ul>
+<li>FIFA rank</li>
+<li>FIFA points</li>
+<li>World Cup titles</li>
+<li>weighted rating</li>
+<li>weighted rank</li>
+</ul>
+</section>
+<section id="validate-the-rating" class="level3">
+<h3 class="anchored" data-anchor-id="validate-the-rating">2. Validate the rating</h3>
+<p>Historical match results are used to compare:</p>
+<ul>
+<li>prediction accuracy from raw FIFA points</li>
+<li>prediction accuracy from weighted ratings</li>
+</ul>
+<p>For each match, the higher-rated team is treated as the predicted winner.</p>
+</section>
+<section id="simulate-matches" class="level3">
+<h3 class="anchored" data-anchor-id="simulate-matches">3. Simulate matches</h3>
+<p>For two teams A and B, the package estimates the probability that team A wins as:</p>
+<p>[ P(A ) = ]</p>
+<p>Then the package simulates one match or many matches using this probability.</p>
+</section>
+</section>
+<section id="key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="key-takeaways">Key Takeaways</h2>
+<p>This project shows that it is possible to build a simple and interpretable simulator from a small custom dataset.</p>
+<p>The main strengths are:</p>
+<ul>
+<li>easy-to-understand rating formula</li>
+<li>reproducible workflow</li>
+<li>direct comparison of raw FIFA points vs weighted ratings</li>
+<li>interactive Streamlit app</li>
+</ul>
+</section>
+<section id="added-improvement-weight-tuning" class="level2">
+<h2 class="anchored" data-anchor-id="added-improvement-weight-tuning">Added Improvement: Weight Tuning</h2>
+<p>A useful extension in this version is testing multiple title weights instead of assuming one fixed value.</p>
+<p>This helps answer a better question:</p>
+<p><strong>How much should World Cup history matter?</strong></p>
+<p>By comparing accuracy across several candidate weights, the user can justify the final choice more clearly.</p>
+</section>
+<section id="limitations" class="level2">
+<h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
+<p>This model is intentionally simple. It does <strong>not</strong> include:</p>
+<ul>
+<li>home-field advantage</li>
+<li>draw probability</li>
+<li>recent roster changes</li>
+<li>injuries</li>
+<li>match importance</li>
+<li>expected goals or shot-based features</li>
+</ul>
+<p>Because of this, the simulator should be understood as a lightweight analytical tool, not a full forecasting system.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>The project meets the main goals of a data science workflow:</p>
+<ul>
+<li>collect or assemble data</li>
+<li>clean and merge it</li>
+<li>create analytical functions in a package</li>
+<li>validate a model</li>
+<li>communicate results through documentation, a tutorial, a report, and an app</li>
+</ul>
+<p>Even with a simple formula, the package provides a clear and reproducible framework for exploring how historical success can affect match prediction.</p>
+
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

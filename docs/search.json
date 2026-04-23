@@ -70,67 +70,18 @@
     "text": "This tutorial shows how to install and use the wc-sim package.\nThe package helps you:\n\nLoad FIFA ranking data and World Cup title data\nCreate a custom weighted rating\nCompare how teams move in the rankings\nSimulate head-to-head matches\nValidate the rating against historical match results\nTest multiple title weights"
   },
   {
-    "objectID": "tutorial.html#installation",
-    "href": "tutorial.html#installation",
-    "title": "Tutorial",
-    "section": "Installation",
-    "text": "Installation\nClone the repository:\ngit clone https://github.com/santiago28b/game-predictor.git\ncd game-predictor\nInstall the package locally:\npip install -e .\nIf you also want development tools like testing and Quarto support, run:\npip install -e .[dev]"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "wc-sim",
-    "section": "",
-    "text": "wc-sim is a Python package for simulating international soccer matches using a custom rating system.\nThe main idea is simple:\n\nstart with current FIFA ranking points\nadd a bonus based on historical FIFA World Cup titles\nvalidate whether this new rating predicts match outcomes better than raw FIFA points\nuse the rating to simulate head-to-head matches"
-  },
-  {
-    "objectID": "index.html#project-overview",
-    "href": "index.html#project-overview",
-    "title": "wc-sim",
-    "section": "",
-    "text": "wc-sim is a Python package for simulating international soccer matches using a custom rating system.\nThe main idea is simple:\n\nstart with current FIFA ranking points\nadd a bonus based on historical FIFA World Cup titles\nvalidate whether this new rating predicts match outcomes better than raw FIFA points\nuse the rating to simulate head-to-head matches"
-  },
-  {
-    "objectID": "index.html#motivating-question",
-    "href": "index.html#motivating-question",
-    "title": "wc-sim",
-    "section": "Motivating Question",
-    "text": "Motivating Question\nCan we build a more useful World Cup-style match simulator by combining a team’s current FIFA strength with its historical tournament success?"
-  },
-  {
-    "objectID": "index.html#project-components",
-    "href": "index.html#project-components",
-    "title": "wc-sim",
-    "section": "Project Components",
-    "text": "Project Components\nThis project includes:\n\na Python package for data wrangling, simulation, and validation\na Streamlit app for head-to-head match simulation\na tutorial for installation and package use\na technical report explaining the methodology and results"
-  },
-  {
-    "objectID": "index.html#quick-links",
-    "href": "index.html#quick-links",
-    "title": "wc-sim",
-    "section": "Quick Links",
-    "text": "Quick Links\n\nTutorial\nTechnical Report\nAPI Reference\nStreamlit App\nGitHub Repository"
-  },
-  {
-    "objectID": "index.html#main-functions",
-    "href": "index.html#main-functions",
-    "title": "wc-sim",
-    "section": "Main Functions",
-    "text": "Main Functions\nThe package currently includes these main functions:\n\ncalculate_weighted_rating()\ncompare_rank_changes()\nsimulate_match()\nsimulate_match_n()\nvalidate_weighted_rating()\ntune_weight()"
-  },
-  {
-    "objectID": "index.html#data-sources",
-    "href": "index.html#data-sources",
-    "title": "wc-sim",
-    "section": "Data Sources",
-    "text": "Data Sources\nThis project uses:\n\ncurrent FIFA rankings\na curated table of World Cup title counts\nhistorical international match results for validation\n\nThe data collection and cleaning workflow is documented in the repository, including the notebook used to assemble the dataset."
-  },
-  {
     "objectID": "tutorial.html#overview",
     "href": "tutorial.html#overview",
     "title": "Tutorial",
     "section": "",
     "text": "This tutorial shows how to install and use the wc-sim package.\nThe package helps you:\n\nLoad FIFA ranking data and World Cup title data\nCreate a custom weighted rating\nCompare how teams move in the rankings\nSimulate head-to-head matches\nValidate the rating against historical match results\nTest multiple title weights"
+  },
+  {
+    "objectID": "tutorial.html#installation",
+    "href": "tutorial.html#installation",
+    "title": "Tutorial",
+    "section": "Installation",
+    "text": "Installation\nClone the repository:\ngit clone https://github.com/santiago28b/game-predictor.git\ncd game-predictor\nInstall the package locally:\npip install -e .\nIf you also want development tools like testing and Quarto support, run:\npip install -e .[dev]"
   },
   {
     "objectID": "tutorial.html#load-the-data",
@@ -208,5 +159,117 @@
     "title": "Tutorial",
     "section": "Summary",
     "text": "Summary\nIn this tutorial you learned how to:\n\nInstall the package\nLoad data\nBuild the weighted rating\nCompare rankings\nSimulate matches\nValidate results\nTest different weights\nRun the Streamlit app\n\nFor more details, see the Technical Report."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Game Predictor",
+    "section": "",
+    "text": "wc-sim is a Python package for simulating international soccer matches using a custom rating system.\nThe main idea is simple:\n\nstart with current FIFA ranking points\nadd a bonus based on historical FIFA World Cup titles\nvalidate whether this new rating predicts match outcomes better than raw FIFA points\nuse the rating to simulate head-to-head matches"
+  },
+  {
+    "objectID": "index.html#project-overview",
+    "href": "index.html#project-overview",
+    "title": "Game Predictor",
+    "section": "",
+    "text": "wc-sim is a Python package for simulating international soccer matches using a custom rating system.\nThe main idea is simple:\n\nstart with current FIFA ranking points\nadd a bonus based on historical FIFA World Cup titles\nvalidate whether this new rating predicts match outcomes better than raw FIFA points\nuse the rating to simulate head-to-head matches"
+  },
+  {
+    "objectID": "index.html#motivating-question",
+    "href": "index.html#motivating-question",
+    "title": "Game Predictor",
+    "section": "Motivating Question",
+    "text": "Motivating Question\nCan we build a more useful World Cup-style match simulator by combining a team’s current FIFA strength with its historical tournament success?"
+  },
+  {
+    "objectID": "index.html#project-components",
+    "href": "index.html#project-components",
+    "title": "Game Predictor",
+    "section": "Project Components",
+    "text": "Project Components\nThis project includes:\n\na Python package for data wrangling, simulation, and validation\na Streamlit app for head-to-head match simulation\na tutorial for installation and package use\na technical report explaining the methodology and results"
+  },
+  {
+    "objectID": "index.html#quick-links",
+    "href": "index.html#quick-links",
+    "title": "Game Predictor",
+    "section": "Quick Links",
+    "text": "Quick Links\n\nTutorial\nTechnical Report\nAPI Reference\nStreamlit App\nGitHub Repository"
+  },
+  {
+    "objectID": "index.html#main-functions",
+    "href": "index.html#main-functions",
+    "title": "Game Predictor",
+    "section": "Main Functions",
+    "text": "Main Functions\nThe package currently includes these main functions:\n\ncalculate_weighted_rating()\ncompare_rank_changes()\nsimulate_match()\nsimulate_match_n()\nvalidate_weighted_rating()\ntune_weight()"
+  },
+  {
+    "objectID": "index.html#data-sources",
+    "href": "index.html#data-sources",
+    "title": "Game Predictor",
+    "section": "Data Sources",
+    "text": "Data Sources\nThis project uses:\n\ncurrent FIFA rankings\na curated table of World Cup title counts\nhistorical international match results for validation\n\nThe data collection and cleaning workflow is documented in the repository, including the notebook used to assemble the dataset."
+  },
+  {
+    "objectID": "report.html",
+    "href": "report.html",
+    "title": "Technical Report",
+    "section": "",
+    "text": "Can we improve an international soccer match simulator by combining current FIFA points with historical FIFA World Cup success?\nMost rating systems focus mainly on present performance. This project tests whether adding a small historical prestige component can improve prediction accuracy for international match outcomes."
+  },
+  {
+    "objectID": "report.html#motivating-question",
+    "href": "report.html#motivating-question",
+    "title": "Technical Report",
+    "section": "",
+    "text": "Can we improve an international soccer match simulator by combining current FIFA points with historical FIFA World Cup success?\nMost rating systems focus mainly on present performance. This project tests whether adding a small historical prestige component can improve prediction accuracy for international match outcomes."
+  },
+  {
+    "objectID": "report.html#data-sources",
+    "href": "report.html#data-sources",
+    "title": "Technical Report",
+    "section": "Data Sources",
+    "text": "Data Sources\nThis project uses three main data sources:\n\nCurrent FIFA rankings with team names and point totals\n\nWorld Cup title counts for nations that have won the tournament\n\nHistorical international match results used to validate the model\n\nThe ranking and titles data are stored in the data/ folder. Historical results are used during validation. The repository also includes a notebook documenting the data collection process."
+  },
+  {
+    "objectID": "report.html#data-wrangling",
+    "href": "report.html#data-wrangling",
+    "title": "Technical Report",
+    "section": "Data Wrangling",
+    "text": "Data Wrangling\nThe main wrangling step is merging current FIFA rankings with historical World Cup title counts.\nThe weighted rating is defined as:\n[ = + ( ) ]\nThis creates a new score that keeps current performance as the main signal while still allowing historical success to have some influence."
+  },
+  {
+    "objectID": "report.html#analysis-workflow",
+    "href": "report.html#analysis-workflow",
+    "title": "Technical Report",
+    "section": "Analysis Workflow",
+    "text": "Analysis Workflow\nThe project includes three main analysis steps:\n\n1. Build a weighted ranking table\nThe package creates a table with:\n\nFIFA rank\nFIFA points\nWorld Cup titles\nweighted rating\nweighted rank\n\n\n\n2. Validate the rating\nHistorical match results are used to compare:\n\nprediction accuracy from raw FIFA points\nprediction accuracy from weighted ratings\n\nFor each match, the higher-rated team is treated as the predicted winner.\n\n\n3. Simulate matches\nFor two teams A and B, the package estimates the probability that team A wins as:\n[ P(A ) = ]\nThen the package simulates one match or many matches using this probability."
+  },
+  {
+    "objectID": "report.html#key-takeaways",
+    "href": "report.html#key-takeaways",
+    "title": "Technical Report",
+    "section": "Key Takeaways",
+    "text": "Key Takeaways\nThis project shows that it is possible to build a simple and interpretable simulator from a small custom dataset.\nThe main strengths are:\n\neasy-to-understand rating formula\nreproducible workflow\ndirect comparison of raw FIFA points vs weighted ratings\ninteractive Streamlit app"
+  },
+  {
+    "objectID": "report.html#added-improvement-weight-tuning",
+    "href": "report.html#added-improvement-weight-tuning",
+    "title": "Technical Report",
+    "section": "Added Improvement: Weight Tuning",
+    "text": "Added Improvement: Weight Tuning\nA useful extension in this version is testing multiple title weights instead of assuming one fixed value.\nThis helps answer a better question:\nHow much should World Cup history matter?\nBy comparing accuracy across several candidate weights, the user can justify the final choice more clearly."
+  },
+  {
+    "objectID": "report.html#limitations",
+    "href": "report.html#limitations",
+    "title": "Technical Report",
+    "section": "Limitations",
+    "text": "Limitations\nThis model is intentionally simple. It does not include:\n\nhome-field advantage\ndraw probability\nrecent roster changes\ninjuries\nmatch importance\nexpected goals or shot-based features\n\nBecause of this, the simulator should be understood as a lightweight analytical tool, not a full forecasting system."
+  },
+  {
+    "objectID": "report.html#conclusion",
+    "href": "report.html#conclusion",
+    "title": "Technical Report",
+    "section": "Conclusion",
+    "text": "Conclusion\nThe project meets the main goals of a data science workflow:\n\ncollect or assemble data\nclean and merge it\ncreate analytical functions in a package\nvalidate a model\ncommunicate results through documentation, a tutorial, a report, and an app\n\nEven with a simple formula, the package provides a clear and reproducible framework for exploring how historical success can affect match prediction."
   }
 ]
