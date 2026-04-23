@@ -1,0 +1,27 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "wc-sim"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: tutorial.qmd
+        text: Tutorial
+      - href: report.qmd
+        text: Technical Report
+      - href: reference.qmd
+        text: API Reference
+    right:
+      - href: https://github.com/santiago28b/game-predictor
+        text: GitHub Repo
+      - href: https://game-predictor-g66jsocnan5fdee67p8ben.streamlit.app/
+        text: Streamlit App
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    number-sections: false
