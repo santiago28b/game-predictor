@@ -260,7 +260,7 @@ from wc_sim import calculate_weighted_rating
 
 ranks = pd.read_csv("data/rankings.csv")
 titles = pd.read_csv("data/titles.csv")
-results_df = pd.read_csv("data/results.csv")
+results_df = pd.read_csv("data/path_to_your_results_dataset.csv")
 ```
 
 **Step 2: Build rating**
