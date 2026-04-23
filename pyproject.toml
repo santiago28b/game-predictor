@@ -1,26 +1,36 @@
+[project]
+name = "wc-sim"
+version = "0.1.0"
+description = "Python package to simulate international soccer match outcomes using FIFA rankings and World Cup history."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+  { name = "Santiago Bolaño" },
+  { name = "Emiliano Santacruz" }
+]
+dependencies = [
+  "pandas>=2.0.0",
+  "numpy>=1.26.0",
+  "streamlit>=1.35.0",
+  "plotly>=5.20.0"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0.0",
+  "quarto-cli>=1.6.0"
+]
+
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
-[project]
-name = "final-project"
-version = "0.1.0"
-description = "Add your description here"
-readme = "README.md"
-requires-python = ">=3.13"
-dependencies = [
-    "beautifulsoup4>=4.14.3",
-    "dotenv>=0.9.9",
-    "ipykernel>=7.2.0",
-    "kagglehub>=1.0.0",
-    "numpy>=2.4.4",
-    "pandas>=3.0.2",
-    "pdoc>=16.0.0",
-    "plotly>=6.7.0",
-    "pytest>=9.0.3",
-    "requests>=2.33.1",
-    "streamlit>=1.56.0",
-]
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
